@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\V1\AuthenticationController;
+use App\Http\Middleware\VerifyJwtToken;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,5 +19,7 @@ Route::name('api.admin.')
     ->prefix('v1/admin')
     ->group(function () {
         Route::post('login', [AuthenticationController::class, 'login'])->name('login');
-        Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
+        Route::post('logout', [AuthenticationController::class, 'logout'])
+            ->name('logout')
+            ->middleware([VerifyJwtToken::class]);
     });
