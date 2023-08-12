@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Facades\JwtAuth;
+use App\Models\JwtToken;
 use App\Models\User;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -99,7 +100,34 @@ class AuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function user_can_be_logout(): void
+    public function admin_can_login(): void
+    {
+        $this->seed();
+
+        $response = $this->postJson(route('api.admin.login'), [
+            'email' => DatabaseSeeder::ADMIN_EMAIL,
+            'password' => DatabaseSeeder::ADMIN_PASSWORD,
+        ]);
+
+        $response->assertSuccessful();
+
+        $response->assertJsonStructure([
+            'data' => [
+                'token'
+            ]
+        ]);
+
+        $token = $response['data']['token'];
+
+        $parsedToken = JwtAuth::parseToken($token);
+
+        $tokenRecord = JwtToken::whereUniqueId($parsedToken->claims()->get('jti'))->first();
+
+        $this->assertModelExists($tokenRecord);
+    }
+
+    /** @test */
+    public function admin_can_logout(): void
     {
         $this->seed();
 
@@ -114,12 +142,12 @@ class AuthenticationTest extends TestCase
 
         $parsedToken = JwtAuth::parseToken($token);
 
-        $tokenRecord = JwtToken::whereUuid($parsedToken->claims()->get('jti'))->first();
+        $tokenRecord = JwtToken::whereUniqueId($parsedToken->claims()->get('jti'))->first();
 
         $response = $this->postJson(route('api.admin.logout'), [], [
             'Authorization' => 'Bearer ' . $response['data']['token'],
         ]);
 
-        $this->assertModalNotExists($tokenRecord);
+        $this->assertModelMissing($tokenRecord);
     }
 }
