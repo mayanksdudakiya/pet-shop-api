@@ -2,16 +2,23 @@
 
 namespace App\Services;
 
+use App\Facades\ApiResponse;
 use App\Models\User;
 use DateTimeImmutable;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Http\JsonResponse;
 use Lcobucci\JWT\Encoding\ChainedFormatter;
 use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Token\Builder;
 use Illuminate\Support\Str;
 use Lcobucci\JWT\Configuration;
+use Lcobucci\JWT\Encoding\CannotDecodeContent;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
+use Lcobucci\JWT\Token\InvalidTokenStructure;
+use Lcobucci\JWT\Token\Parser;
+use Lcobucci\JWT\Token\UnsupportedHeaderFound;
+use Lcobucci\JWT\UnencryptedToken;
 
 final readonly class JwtAuth
 {
@@ -46,5 +53,19 @@ final readonly class JwtAuth
             InMemory::file($privateKeyPath),
             InMemory::base64Encoded($jwtSecretKey)
         );
+    }
+
+    public function parseToken(string $token): UnencryptedToken|JsonResponse
+    {
+        $parser = new Parser(new JoseEncoder());
+
+        try {
+            $token = $parser->parse($token);
+        } catch (CannotDecodeContent | InvalidTokenStructure | UnsupportedHeaderFound $e) {
+            return ApiResponse::sendError($e->getMessage());
+        }
+        assert($token instanceof UnencryptedToken);
+
+        return $token;
     }
 }
