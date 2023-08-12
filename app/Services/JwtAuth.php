@@ -30,7 +30,7 @@ final readonly class JwtAuth
             //->canOnlyBeUsedAfter($now->modify('+1 minute')) // Configures the time that the token can be used (nbf claim)
             ->expiresAt($expireAt) // Configures the expiration time of the token (exp claim)
             ->withClaim('user_uuid', $user->uuid) // Configures a new claim, called "uid"
-            ->withClaim('access_level', $user->is_admin ? 'admin' : 'user')
+            ->withClaim('access_level', $user->type())
             ->getToken($this->getConfiguration()->signer(), $this->getConfiguration()->signingKey());
     }
 
