@@ -18,8 +18,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::name('api.admin.')
     ->prefix('v1/admin')
+    ->middleware(['throttle:10,1'])
     ->group(function () {
-            Route::post('login', [AuthenticationController::class, 'login'])->name('login');
+            Route::post('login', [AuthenticationController::class, 'login'])
+                ->name('login')
+                ->middleware('guest');
 
             Route::middleware([
                 VerifyJwtToken::class,
