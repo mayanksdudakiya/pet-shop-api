@@ -6,6 +6,7 @@ namespace App\Services;
 use App\Facades\ApiResponse;
 use App\Models\User;
 use DateTimeImmutable;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
@@ -63,6 +64,8 @@ final readonly class JwtAuth
 
     public function parseToken(string $token): UnencryptedToken|JsonResponse
     {
+        throw_unless($token, new AuthenticationException());
+
         $parser = new Parser(new JoseEncoder());
 
         try {

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\UserTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -51,10 +52,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'last_login_at' => 'datetime',
+        'is_marketing' => 'boolean',
+        'is_admin' => 'boolean',
     ];
 
     public function type(): string
     {
         return $this->is_admin ? UserTypeEnum::ADMIN->value : UserTypeEnum::USER->value;
+    }
+
+    /**
+     * @return HasMany<JwtToken>
+     */
+    public function tokens(): HasMany
+    {
+        return $this->hasMany(JwtToken::class, 'user_uuid', 'uuid');
     }
 }
