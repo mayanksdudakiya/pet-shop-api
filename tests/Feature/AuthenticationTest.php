@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Facades\JwtAuth;
+use App\Models\User;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -94,5 +96,30 @@ class AuthenticationTest extends TestCase
                 'password'
             ]
         ]);
+    }
+
+    /** @test */
+    public function user_can_be_logout(): void
+    {
+        $this->seed();
+
+        $response = $this->postJson(route('api.admin.login'), [
+            'email' => DatabaseSeeder::ADMIN_EMAIL,
+            'password' => DatabaseSeeder::ADMIN_PASSWORD,
+        ]);
+
+        $response->assertSuccessful();
+
+        $token = $response['data']['token'];
+
+        $parsedToken = JwtAuth::parseToken($token);
+
+        $tokenRecord = JwtToken::whereUuid($parsedToken->claims()->get('jti'))->first();
+
+        $response = $this->postJson(route('api.admin.logout'), [], [
+            'Authorization' => 'Bearer ' . $response['data']['token'],
+        ]);
+
+        $this->assertModalNotExists($tokenRecord);
     }
 }
