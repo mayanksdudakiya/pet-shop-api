@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\V1\AuthenticationController;
 use App\Http\Middleware\VerifyJwtToken;
+use App\Http\Middleware\VerifyUserType;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,8 +19,13 @@ use Illuminate\Support\Facades\Route;
 Route::name('api.admin.')
     ->prefix('v1/admin')
     ->group(function () {
-        Route::post('login', [AuthenticationController::class, 'login'])->name('login');
-        Route::post('logout', [AuthenticationController::class, 'logout'])
-            ->name('logout')
-            ->middleware([VerifyJwtToken::class]);
+            Route::post('login', [AuthenticationController::class, 'login'])->name('login');
+
+            Route::middleware([
+                VerifyJwtToken::class,
+                VerifyUserType::class . ':admin'
+            ])->group(function() {
+                Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
+                // Rest admin related protected should goes here
+            });
     });

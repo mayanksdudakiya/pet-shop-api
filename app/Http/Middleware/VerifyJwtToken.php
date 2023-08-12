@@ -29,7 +29,7 @@ class VerifyJwtToken
         }
 
         if ($parsedToken->isExpired(new DateTimeImmutable())) {
-            JwtToken::removeToken($parsedToken);
+            JwtToken::deleteToken($parsedToken);
             return ApiResponse::sendError('Token has expired', Response::HTTP_UNAUTHORIZED);
         }
 
