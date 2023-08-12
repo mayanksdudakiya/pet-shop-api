@@ -6,8 +6,10 @@ use App\Enums\UserTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Lcobucci\JWT\UnencryptedToken;
 
 class User extends Authenticatable
 {
@@ -57,16 +59,22 @@ class User extends Authenticatable
         'is_admin' => 'boolean',
     ];
 
-    public function type(): string
-    {
-        return $this->is_admin ? UserTypeEnum::ADMIN->value : UserTypeEnum::USER->value;
-    }
-
     /**
      * @return HasMany<JwtToken>
      */
     public function tokens(): HasMany
     {
         return $this->hasMany(JwtToken::class, 'user_uuid', 'uuid');
+    }
+
+    public function type(): string
+    {
+        return $this->is_admin ? UserTypeEnum::ADMIN->value : UserTypeEnum::USER->value;
+    }
+
+    public static function setAuthenticatedUserInRequest(UnencryptedToken $token, Request $request): void
+    {
+        $user = self::whereUuid($token->claims()->get('user_uuid'))->firstOrFail();
+        $request->merge(['user' => $user]);
     }
 }
