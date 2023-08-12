@@ -121,7 +121,7 @@ class AuthenticationTest extends TestCase
 
         $parsedToken = JwtAuth::parseToken($token);
 
-        $tokenRecord = JwtToken::whereUniqueId($parsedToken->claims()->get('jti'))->first();
+        $tokenRecord = JwtToken::getTokenByUniqueId($parsedToken);
 
         $this->assertModelExists($tokenRecord);
     }
@@ -142,7 +142,7 @@ class AuthenticationTest extends TestCase
 
         $parsedToken = JwtAuth::parseToken($token);
 
-        $tokenRecord = JwtToken::whereUniqueId($parsedToken->claims()->get('jti'))->first();
+        $tokenRecord = JwtToken::getTokenByUniqueId($parsedToken);
 
         $response = $this->postJson(route('api.admin.logout'), [], [
             'Authorization' => 'Bearer ' . $response['data']['token'],
