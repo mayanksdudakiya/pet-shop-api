@@ -51,10 +51,10 @@ class Handler extends ExceptionHandler
     {
         return match (true) {
             $e instanceof PostTooLargeException => ApiResponse::sendError('The uploaded file is too large.', Response::HTTP_REQUEST_ENTITY_TOO_LARGE),
-            $e instanceof AuthenticationException => ApiResponse::sendError('Unauthenticated', Response::HTTP_UNAUTHORIZED),
+            $e instanceof AuthenticationException => ApiResponse::sendError('Failed to authenticate user', Response::HTTP_UNAUTHORIZED),
             $e instanceof ThrottleRequestsException => ApiResponse::sendError('Too Many Requests.', Response::HTTP_TOO_MANY_REQUESTS),
             $e instanceof ModelNotFoundException => ApiResponse::sendError($e->getMessage(), Response::HTTP_NOT_FOUND),
-            $e instanceof ValidationException => ApiResponse::sendValidationError($e->validator->errors()),
+            $e instanceof ValidationException => ApiResponse::sendValidationError('Validation error occured', $e->validator->errors()),
             $e instanceof QueryException => ApiResponse::sendError('Database query error.', Response::HTTP_INTERNAL_SERVER_ERROR),
             $e instanceof HttpResponseException => $e->getResponse(),
             $e instanceof FileNotFoundException => ApiResponse::sendError($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR),

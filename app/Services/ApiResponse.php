@@ -8,7 +8,7 @@ use Illuminate\Support\MessageBag;
 
 final class ApiResponse
 {
-    private function buildResponse(int $success=0, array $data=[], string|null $error, array|MessageBag $errors, array $trace=[], int $statusCode): JsonResponse
+    private function buildResponse(int $success=0, array $data=[], string|null $error = null, array|MessageBag $errors = [], array $trace=[], int $statusCode): JsonResponse
     {
         return response()->json([
             'success' => $success,
