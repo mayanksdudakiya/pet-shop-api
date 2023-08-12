@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class AdminAuthenticationTest extends TestCase
+class AuthenticationTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -20,7 +20,24 @@ class AdminAuthenticationTest extends TestCase
         $response->assertUnprocessable();
 
         $response->assertJsonStructure([
-            'validation_errors' => [
+            'errors' => [
+                'email'
+            ]
+        ]);
+    }
+
+    /** @test */
+    public function admin_login_email_should_be_valid_email_address(): void
+    {
+        $response = $this->postJson(route('api.admin.login'), [
+            'email' => 'admin@',
+            'password' => 'admin',
+        ]);
+
+        $response->assertUnprocessable();
+
+        $response->assertJsonStructure([
+            'errors' => [
                 'email'
             ]
         ]);
