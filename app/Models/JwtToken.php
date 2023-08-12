@@ -46,4 +46,9 @@ class JwtToken extends Model
     {
         return self::whereUniqueId($token->claims()->get('jti'))->first();
     }
+
+    public static function deleteToken(UnencryptedToken $token): bool
+    {
+        return self::whereUniqueId($token->claims()->get('jti'))->delete();
+    }
 }
