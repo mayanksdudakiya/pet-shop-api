@@ -11,6 +11,7 @@ use App\Models\User;
 use ErrorException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -41,5 +42,13 @@ class AuthenticationController extends Controller
             Log::error($e->getMessage());
             throw new ErrorException();
         }
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $token = JwtToken::whereUniqueId($request->jti)->firstOrFail();
+        $token->delete();
+
+        return ApiResponse::sendSuccess();
     }
 }

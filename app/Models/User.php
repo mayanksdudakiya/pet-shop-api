@@ -75,6 +75,6 @@ class User extends Authenticatable
     public static function setAuthenticatedUserInRequest(UnencryptedToken $token, Request $request): void
     {
         $user = self::whereUuid($token->claims()->get('user_uuid'))->firstOrFail();
-        $request->merge(['user' => $user]);
+        $request->merge(['user' => $user, 'jti' => $token->claims()->get('jti')]);
     }
 }
