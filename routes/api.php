@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::name('api.admin.')
+    ->prefix('v1/admin')
+    ->group(function () {
+        Route::post('login', [AuthenticationController::class, 'login'])->name('login');
+    });
