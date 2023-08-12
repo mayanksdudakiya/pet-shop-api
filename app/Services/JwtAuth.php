@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Services;
 
@@ -7,6 +8,7 @@ use App\Models\User;
 use DateTimeImmutable;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 use Lcobucci\JWT\Encoding\ChainedFormatter;
 use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Signer\Key\InMemory;
@@ -19,6 +21,10 @@ use Lcobucci\JWT\Token\InvalidTokenStructure;
 use Lcobucci\JWT\Token\Parser;
 use Lcobucci\JWT\Token\UnsupportedHeaderFound;
 use Lcobucci\JWT\UnencryptedToken;
+use Lcobucci\JWT\Validation\Constraint\IssuedBy;
+use Lcobucci\JWT\Validation\Constraint\PermittedFor;
+use Lcobucci\JWT\Validation\RequiredConstraintsViolated;
+use Lcobucci\JWT\Validation\Validator;
 
 final readonly class JwtAuth
 {
@@ -67,5 +73,19 @@ final readonly class JwtAuth
         assert($token instanceof UnencryptedToken);
 
         return $token;
+    }
+
+    public function validateToken(UnencryptedToken $token): bool
+    {
+        $validator = new Validator();
+
+        try {
+            $validator->assert($token, new IssuedBy(config('app.url')));
+            $validator->assert($token, new PermittedFor(config('app.url')));
+        } catch (RequiredConstraintsViolated $e) {
+            Log::error($e->violations());
+            return false;
+        }
+        return true;
     }
 }
