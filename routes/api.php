@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\V1\AdminAuthController;
+use App\Http\Controllers\V1\UserAuthController;
 use App\Http\Middleware\VerifyJwtToken;
 use App\Http\Middleware\VerifyUserType;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,23 @@ Route::name('api.admin.')
             VerifyUserType::class . ':admin'
         ])->group(function () {
             Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout');
+            // Rest admin related protected routes should goes here
+        });
+    });
+
+Route::name('api.user.')
+    ->prefix('v1/user')
+    ->middleware(['throttle:10,1'])
+    ->group(function () {
+        Route::post('login', [UserAuthController::class, 'login'])
+            ->name('login')
+            ->middleware('guest');
+
+        Route::middleware([
+            VerifyJwtToken::class,
+            VerifyUserType::class . ':user'
+        ])->group(function () {
+            Route::post('logout', [UserAuthController::class, 'logout'])->name('logout');
             // Rest admin related protected routes should goes here
         });
     });
