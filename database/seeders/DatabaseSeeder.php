@@ -18,11 +18,16 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'email' => self::ADMIN_EMAIL,
             'password' => self::ADMIN_PASSWORD,
-            'is_admin' => true
+            'is_admin' => true,
+        ]);
+
+        User::factory()->create([
+            'email' => 'user@gmail.com',
+            'password' => 'userpassword',
         ]);
 
         User::factory(10)->create();
 
-        Product::factory(10)->create();
+        Product::factory(15)->create();
     }
 }
