@@ -67,9 +67,10 @@ class AdminAuthController extends Controller
     }
 
     /**
-     * @OA\Get(
+     * @OA\Post(
      *     path="/api/v1/admin/logout",
      *     tags={"Admin"},
+     *     security={{"bearerAuth":{}}},
      *     @OA\Response(
      *         response="200",
      *         description="OK"

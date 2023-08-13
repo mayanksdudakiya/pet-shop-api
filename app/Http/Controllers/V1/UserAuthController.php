@@ -67,9 +67,10 @@ class UserAuthController extends Controller
     }
 
     /**
-     * @OA\Get(
+     * @OA\Post(
      *     path="/api/v1/user/logout",
      *     tags={"User"},
+     *     security={{"bearerAuth":{}}},
      *     @OA\Response(
      *         response="200",
      *         description="OK"
