@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\ApiResponse;
+use App\Services\BaseAuth;
 use App\Services\JwtAuth;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind('jwt.auth', function () {
             return new JwtAuth();
+        });
+
+        $this->app->bind('base.auth', function () {
+            return new BaseAuth();
         });
     }
 
