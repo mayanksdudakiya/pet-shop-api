@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\V1\AuthenticationController;
 use App\Http\Middleware\VerifyJwtToken;
 use App\Http\Middleware\VerifyUserType;
@@ -37,6 +38,6 @@ Route::name('api.')
     ->prefix('v1/products')
     ->middleware(['throttle:10,1'])
     ->group(function () {
-        Route::get('products', [ProdcutController::class, 'index'])
+        Route::get('products', [ProductController::class, 'index'])
             ->name('products');
     });
