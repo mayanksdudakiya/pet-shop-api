@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 
 class Product extends Model
 {
     use HasFactory;
+    use HasJsonRelationships;
 
     /**
      * @var array<int, string>
@@ -27,4 +30,20 @@ class Product extends Model
     protected $casts = [
         'metadata' => 'json',
     ];
+
+    /** @var array<int, string> $with */
+    protected $with = [
+        'category',
+        'brand',
+    ];
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'category_uuid', 'uuid');
+    }
+
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(Brand::class, 'metadata->brand', 'uuid');
+    }
 }
