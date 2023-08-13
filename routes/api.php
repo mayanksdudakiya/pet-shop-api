@@ -35,7 +35,7 @@ Route::name('api.admin.')
     });
 
 Route::name('api.')
-    ->prefix('v1/products')
+    ->prefix('v1')
     ->middleware(['throttle:10,1'])
     ->group(function () {
         Route::get('products', [ProductController::class, 'index'])
