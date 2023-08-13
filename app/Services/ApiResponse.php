@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use Illuminate\Support\MessageBag;
 
@@ -17,6 +18,29 @@ final class ApiResponse
             'errors' => $errors,
             'trace' => $trace
         ], $statusCode);
+    }
+
+    public function sendData(JsonResource $resource): JsonResponse
+    {
+        $resourceData = $resource->response()->getData(true);
+        $pagination = $resourceData['meta'];
+        $links = $resourceData['links'];
+
+        return response()->json([
+            'current_page' => $pagination['current_page'],
+            'data' => $resourceData['data'],
+            'first_page_url' => $links['first'],
+            'from' => $pagination['from'],
+            'last_page' => $pagination['last_page'],
+            'last_page_url' => $links['last'],
+            'links' => $pagination['links'],
+            'next_page_url' => $links['next'],
+            'path' => $pagination['path'],
+            'per_page' => $pagination['per_page'],
+            'prev_page_url' => $links['prev'],
+            'to' => $pagination['to'],
+            'total' => $pagination['total'],
+        ], Response::HTTP_OK);
     }
 
     public function sendSuccess(array $data = [], $statusCode = Response::HTTP_OK): JsonResponse
