@@ -4,13 +4,12 @@ namespace Tests\Feature;
 
 use App\Facades\JwtAuth;
 use App\Models\JwtToken;
-use App\Models\User;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 
-class AuthenticationTest extends TestCase
+class AdminAuthenticationTest extends TestCase
 {
     use RefreshDatabase;
 
