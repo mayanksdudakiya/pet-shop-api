@@ -39,8 +39,7 @@ final class BaseAuth
             ]);
         } catch (Throwable $e) {
             DB::rollBack();
-            Log::error($e->getMessage());
-            throw new ErrorException();
+            return ApiResponse::sendError($e->getMessage());
         }
     }
 
