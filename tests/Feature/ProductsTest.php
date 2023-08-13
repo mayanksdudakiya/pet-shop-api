@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -24,14 +25,27 @@ class ProductsTest extends TestCase
             ->assertJsonStructure([
                 'current_page',
                 'data' => [
-                    'category_uuid',
-                    'title',
-                    'uuid',
-                    'price',
-                    'metadata',
-                    'category',
-                    'brand',
-                ]
+                    '*' => [
+                        'category_uuid',
+                        'title',
+                        'uuid',
+                        'price',
+                        'metadata',
+                        'category',
+                        'brand'
+                    ]
+                ],
+                'first_page_url',
+                'from',
+                'last_page',
+                'last_page_url',
+                'links',
+                'next_page_url',
+                'path',
+                'per_page',
+                'prev_page_url',
+                'to',
+                'total'
             ])
             ->assertJsonCount(10, 'data')
             ->assertJsonPath('current_page', 1)
