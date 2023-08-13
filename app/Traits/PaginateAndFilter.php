@@ -22,7 +22,7 @@ trait PaginateAndFilter
         $perPage = $request->input('limit', 10);
 
         return $query->paginate(
-            $perPage = 15,
+            $perPage,
             $columns = ['*'],
             $pageName = 'page',
             $page
