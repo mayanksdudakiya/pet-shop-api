@@ -68,11 +68,17 @@ class Product extends Model
         'brand',
     ];
 
+    /**
+     * @return BelongsTo<Category, Product>
+     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_uuid', 'uuid');
     }
 
+    /**
+     * @return BelongsTo<Brand, Product>
+     */
     public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class, 'metadata->brand', 'uuid');

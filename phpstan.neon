@@ -5,9 +5,13 @@ parameters:
 
     paths:
         - app/
+        - routes/
+        - config/
+        - database/
+
 
     # Level 9 is the highest level
-    level: 3
+    level: 6
 
 #    ignoreErrors:
 #        - '#PHPDoc tag @var#'

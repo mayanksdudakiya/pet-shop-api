@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services;
@@ -29,7 +30,7 @@ use Lcobucci\JWT\Validation\Validator;
 
 final readonly class JwtAuth
 {
-    public function issueToken(User $user)
+    public function issueToken(User $user): UnencryptedToken
     {
         $tokenBuilder = (new Builder(new JoseEncoder(), ChainedFormatter::default()));
         $now   = new DateTimeImmutable();
