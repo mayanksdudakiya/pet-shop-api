@@ -20,15 +20,23 @@ Route::name('api.admin.')
     ->prefix('v1/admin')
     ->middleware(['throttle:10,1'])
     ->group(function () {
-            Route::post('login', [AuthenticationController::class, 'login'])
-                ->name('login')
-                ->middleware('guest');
+        Route::post('login', [AuthenticationController::class, 'login'])
+            ->name('login')
+            ->middleware('guest');
 
-            Route::middleware([
-                VerifyJwtToken::class,
-                VerifyUserType::class . ':admin'
-            ])->group(function() {
-                Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
-                // Rest admin related protected should goes here
-            });
+        Route::middleware([
+            VerifyJwtToken::class,
+            VerifyUserType::class . ':admin'
+        ])->group(function () {
+            Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
+            // Rest admin related protected should goes here
+        });
+    });
+
+Route::name('api.')
+    ->prefix('v1/products')
+    ->middleware(['throttle:10,1'])
+    ->group(function () {
+        Route::get('products', [ProdcutController::class, 'index'])
+            ->name('products');
     });
