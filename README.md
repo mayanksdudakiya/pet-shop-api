@@ -8,3 +8,22 @@
 6) Setup database as you like and run the `php artisan migrate:fresh --seed`
 7) Generate private key for the JWT signing key `openssl genpkey -algorithm RSA -out jwt-key.pem`
 8) Finally, run the `php artisan serve`
+
+## Swagger Api Doc Generation
+
+`php artisan l5-swagger:generate`
+
+### Swagger Api Doc URL
+`http://127.0.0.1:8001/api/documentation`
+
+## PHP Insights
+
+`php artisan insights`
+
+## PHPStan Analyse
+
+`./vendor/bin/phpstan analyse`
+
+## Test
+
+`php artisan test`

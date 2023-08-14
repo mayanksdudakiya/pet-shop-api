@@ -15,7 +15,7 @@ trait PaginateAndFilter
     */
     protected function applyFilters(Builder $query, Request $request): Builder
     {
-        $sortOrder = $request->input('desc', false) ? 'desc' : 'asc';
+        $sortOrder = $request->input('desc') === 'true' ? 'desc' : 'asc';
         $sortColumn = $request->input('sortBy', 'created_at');
 
         return $query->orderBy($sortColumn, $sortOrder);

@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::name('api.admin.')
     ->prefix('v1/admin')
-    ->middleware(['throttle:10,1'])
+    ->middleware(['throttle:30,1'])
     ->group(function () {
         Route::post('login', [AdminAuthController::class, 'login'])
             ->name('login')
@@ -38,7 +38,7 @@ Route::name('api.admin.')
 
 Route::name('api.user.')
     ->prefix('v1/user')
-    ->middleware(['throttle:10,1'])
+    ->middleware(['throttle:30,1'])
     ->group(function () {
         Route::post('login', [UserAuthController::class, 'login'])
             ->name('login')
@@ -56,7 +56,7 @@ Route::name('api.user.')
 
 Route::name('api.')
     ->prefix('v1')
-    ->middleware(['throttle:10,1'])
+    ->middleware(['throttle:30,1'])
     ->group(function () {
         Route::get('products', [ProductController::class, 'index'])
             ->name('products');
