@@ -27,3 +27,16 @@
 ## Test
 
 `php artisan test`
+
+
+## Insights Results
+![image](https://github.com/mayanksdudakiya/pet-shop-api/assets/34036151/a049b7e6-d11e-486d-a049-4b237d8c08bf)
+
+## Test Results
+![image](https://github.com/mayanksdudakiya/pet-shop-api/assets/34036151/dbf4dd71-a41a-4a51-8244-fab4d9e97ca4)
+
+## Swagger API demo
+
+
+https://github.com/mayanksdudakiya/pet-shop-api/assets/34036151/2124542c-b6ff-454a-b5ef-293c5815152f
+
