@@ -28,9 +28,10 @@ Route::name('api.admin.')
 
         Route::middleware([
             VerifyJwtToken::class,
-            VerifyUserType::class . ':admin'
+            VerifyUserType::class . ':admin',
         ])->group(function () {
-            Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout');
+            Route::post('logout', [AdminAuthController::class, 'logout'])
+                ->name('logout');
             // Rest admin related protected routes should goes here
         });
     });
@@ -45,9 +46,10 @@ Route::name('api.user.')
 
         Route::middleware([
             VerifyJwtToken::class,
-            VerifyUserType::class . ':user'
+            VerifyUserType::class . ':user',
         ])->group(function () {
-            Route::post('logout', [UserAuthController::class, 'logout'])->name('logout');
+            Route::post('logout', [UserAuthController::class, 'logout'])
+                ->name('logout');
             // Rest admin related protected routes should goes here
         });
     });

@@ -10,31 +10,10 @@ use Illuminate\Support\MessageBag;
 final class ApiResponse
 {
     /**
-    * @param int $success
-    * @param array<mixed, mixed> $data
-    * @param string|null $error
-    * @param array<string, string>|MessageBag $errors
-    * @param array<string, string> $trace
-    * @param int $statusCode
-    *
-    * @return JsonResponse
-    */
-    private function buildResponse(int $success=0, array $data=[], string|null $error = null, array|MessageBag $errors = [], array $trace=[], int $statusCode = 200): JsonResponse
-    {
-        return response()->json([
-            'success' => $success,
-            'data' => $data,
-            'error' => $error,
-            'errors' => $errors,
-            'trace' => $trace
-        ], $statusCode);
-    }
-
-    /**
-    * @param JsonResource $resource
-    *
-    * @return JsonResponse
-    */
+     * @param JsonResource $resource
+     *
+     * @return JsonResponse
+     */
     public function sendData(JsonResource $resource): JsonResponse
     {
         $resourceData = $resource->response()->getData(true);
@@ -59,11 +38,11 @@ final class ApiResponse
     }
 
     /**
-    * @param array<mixed, mixed> $data
-    * @param int $statusCode
-    *
-    * @return JsonResponse
-    */
+     * @param array<mixed, mixed> $data
+     * @param int $statusCode
+     *
+     * @return JsonResponse
+     */
     public function sendSuccess(array $data = [], $statusCode = Response::HTTP_OK): JsonResponse
     {
         return $this->buildResponse(
@@ -77,11 +56,11 @@ final class ApiResponse
     }
 
     /**
-    * @param string $error
-    * @param int $statusCode
-    *
-    * @return JsonResponse
-    */
+     * @param string $error
+     * @param int $statusCode
+     *
+     * @return JsonResponse
+     */
     public function sendError(string $error, $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR): JsonResponse
     {
         return $this->buildResponse(
@@ -95,13 +74,13 @@ final class ApiResponse
     }
 
     /**
-    * @param string $error
-    * @param array<string, string>|MessageBag $errors
-    * @param array<string, string> $trace
-    * @param int $statusCode
-    *
-    * @return JsonResponse
-    */
+     * @param string $error
+     * @param array<string, string>|MessageBag $errors
+     * @param array<string, string> $trace
+     * @param int $statusCode
+     *
+     * @return JsonResponse
+     */
     public function sendValidationError(string $error, array|MessageBag $errors, array $trace = [], $statusCode = Response::HTTP_UNPROCESSABLE_ENTITY): JsonResponse
     {
         return $this->buildResponse(
@@ -112,5 +91,26 @@ final class ApiResponse
             $trace,
             $statusCode
         );
+    }
+
+    /**
+     * @param int $success
+     * @param array<mixed, mixed> $data
+     * @param string|null $error
+     * @param array<string, string>|MessageBag $errors
+     * @param array<string, string> $trace
+     * @param int $statusCode
+     *
+     * @return JsonResponse
+     */
+    private function buildResponse(int $success = 0, array $data = [], string|null $error = null, array|MessageBag $errors = [], array $trace = [], int $statusCode = 200): JsonResponse
+    {
+        return response()->json([
+            'success' => $success,
+            'data' => $data,
+            'error' => $error,
+            'errors' => $errors,
+            'trace' => $trace,
+        ], $statusCode);
     }
 }
