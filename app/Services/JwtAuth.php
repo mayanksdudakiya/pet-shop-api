@@ -63,7 +63,7 @@ final readonly class JwtAuth
         );
     }
 
-    public function parseToken(string $token): UnencryptedToken|JsonResponse
+    public function parseToken(string $token): UnencryptedToken
     {
         throw_unless($token, new AuthenticationException());
 
@@ -71,8 +71,15 @@ final readonly class JwtAuth
 
         try {
             $token = $parser->parse($token);
-        } catch (CannotDecodeContent | InvalidTokenStructure | UnsupportedHeaderFound $e) {
-            return ApiResponse::sendError($e->getMessage());
+        } catch (CannotDecodeContent $e) {
+            Log::error($e->getMessage());
+            throw new CannotDecodeContent();
+        } catch (InvalidTokenStructure $e) {
+            Log::error($e->getMessage());
+            throw new InvalidTokenStructure();
+        } catch (UnsupportedHeaderFound $e) {
+            Log::error($e->getMessage());
+            throw new UnsupportedHeaderFound();
         }
         assert($token instanceof UnencryptedToken);
 

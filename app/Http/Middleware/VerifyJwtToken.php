@@ -22,6 +22,10 @@ class VerifyJwtToken
     {
         $token = $request->bearerToken();
 
+        if (empty($token)) {
+            return ApiResponse::sendError('Invalid token', Response::HTTP_UNAUTHORIZED);
+        }
+
         $parsedToken = JwtAuth::parseToken($token);
 
         if (!JwtAuth::validateToken($parsedToken)) {

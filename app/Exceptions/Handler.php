@@ -13,6 +13,9 @@ use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
+use Lcobucci\JWT\Encoding\CannotDecodeContent;
+use Lcobucci\JWT\Token\InvalidTokenStructure;
+use Lcobucci\JWT\Token\UnsupportedHeaderFound;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -58,6 +61,9 @@ class Handler extends ExceptionHandler
             $e instanceof QueryException => ApiResponse::sendError('Database query error.', Response::HTTP_INTERNAL_SERVER_ERROR),
             $e instanceof HttpResponseException => $e->getResponse(),
             $e instanceof FileNotFoundException => ApiResponse::sendError($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR),
+            $e instanceof CannotDecodeContent => ApiResponse::sendError('Failed to authenticate user', Response::HTTP_UNAUTHORIZED),
+            $e instanceof InvalidTokenStructure => ApiResponse::sendError('Failed to authenticate user', Response::HTTP_UNAUTHORIZED),
+            $e instanceof UnsupportedHeaderFound => ApiResponse::sendError('Failed to authenticate user', Response::HTTP_UNAUTHORIZED),
             $e instanceof \Error => ApiResponse::sendError($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR),
             default => parent::render($request, $e),
         };

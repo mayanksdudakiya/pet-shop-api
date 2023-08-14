@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 trait PaginateAndFilter
 {
+    /**
+     * @param Builder<\App\Models\Product> $query
+     *
+     * @return Builder<\App\Models\Product>
+    */
     protected function applyFilters(Builder $query, Request $request): Builder
     {
         $sortOrder = $request->input('desc', false) ? 'desc' : 'asc';
@@ -16,6 +21,12 @@ trait PaginateAndFilter
         return $query->orderBy($sortColumn, $sortOrder);
     }
 
+    /**
+     * @param Builder<\App\Models\Product> $query
+     * @param Request $request
+     *
+     * @return LengthAwarePaginator<\App\Models\Product>
+    */
     protected function paginateResults(Builder $query, Request $request): LengthAwarePaginator
     {
         $page = $request->input('page', 1);
