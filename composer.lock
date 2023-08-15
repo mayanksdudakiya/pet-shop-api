@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a555321e4cb0e8630d2edd8906686ef",
+    "content-hash": "1b77d40e475385ebcaa38d022e47f214",
     "packages": [
         {
             "name": "brick/math",
@@ -2037,6 +2037,77 @@
                 }
             ],
             "time": "2023-08-05T12:09:49+00:00"
+        },
+        {
+            "name": "mayanksdudakiya/currency-converter",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/mayanksdudakiya/currency-converter",
+                "reference": "81795351effd765df2f67354cde3cd6c4e02b982"
+            },
+            "require": {
+                "darkaonline/l5-swagger": "^8.5",
+                "guzzlehttp/guzzle": "^7.2",
+                "illuminate/support": "*",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^9.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mayanksdudakiya\\CurrencyConverter\\CurrencyConverterServiceProvider"
+                    ],
+                    "aliases": {
+                        "CurrencyConverter": "Mayanksdudakiya\\CurrencyConverter\\CurrencyConverterFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mayanksdudakiya\\CurrencyConverter\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Mayanksdudakiya\\CurrencyConverter\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@php vendor/bin/testbench package:discover --ansi"
+                ],
+                "test": [
+                    "@php ./vendor/bin/phpunit"
+                ],
+                "test-coverage": [
+                    "vendor/bin/phpunit --coverage-html coverage"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mayank Dudakiya",
+                    "email": "mayanksdudakiya@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Convert your currency into your preferred currency",
+            "homepage": "https://github.com/mayanksdudakiya/currency-converter",
+            "keywords": [
+                "currency-converter",
+                "mayanksdudakiya"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "monolog/monolog",
@@ -11100,7 +11171,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "mayanksdudakiya/currency-converter": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

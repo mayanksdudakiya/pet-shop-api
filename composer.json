@@ -12,6 +12,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "lcobucci/jwt": "^5.0",
+        "mayanksdudakiya/currency-converter": "dev-main",
         "staudenmeir/eloquent-json-relations": "^1.1"
     },
     "require-dev": {
@@ -69,5 +70,14 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/mayanksdudakiya/currency-converter",
+            "options": {
+                "symlink": true
+            }
+        }
+    ]
 }
