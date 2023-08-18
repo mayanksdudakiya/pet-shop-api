@@ -13,6 +13,7 @@
         "laravel/tinker": "^2.8",
         "lcobucci/jwt": "^5.0",
         "mayanksdudakiya/currency-converter": "dev-main",
+        "mayanksdudakiya/state-machine": "dev-main",
         "staudenmeir/eloquent-json-relations": "^1.1"
     },
     "require-dev": {
@@ -75,6 +76,13 @@
         {
             "type": "path",
             "url": "packages/mayanksdudakiya/currency-converter",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "packages/mayanksdudakiya/state-machine",
             "options": {
                 "symlink": true
             }
