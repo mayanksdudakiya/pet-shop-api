@@ -10,7 +10,7 @@ use Mayanksdudakiya\StateMachine\StateMachine;
 class Order extends Model
 {
     use HasFactory;
-    use StateMachine;
+    //use StateMachine;
 
     protected $fillable = [
         'user_uuid',
