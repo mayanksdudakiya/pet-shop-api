@@ -33,14 +33,6 @@ class Order extends Model
     /**
      * @return HasOne<OrderStatus>
      */
-    public function status(): HasOne
-    {
-        return $this->hasOne(OrderStatus::class, 'uuid', 'order_status_uuid');
-    }
-
-    /**
-     * @return HasOne<OrderStatus>
-     */
     public function payment(): HasOne
     {
         return $this->hasOne(Payment::class, 'uuid', 'payment_uuid');
