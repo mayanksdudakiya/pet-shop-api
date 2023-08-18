@@ -110,6 +110,14 @@ class User extends Authenticatable
         return $this->hasMany(JwtToken::class, 'user_uuid', 'uuid');
     }
 
+    /**
+     * @return HasMany<Order>
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'user_uuid', 'uuid');
+    }
+
     public function type(): string
     {
         return $this->is_admin ? UserTypeEnum::ADMIN->value : UserTypeEnum::USER->value;
