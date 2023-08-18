@@ -30,7 +30,7 @@ class OrderFactory extends Factory
 
         return [
             'user_uuid' => $user->uuid,
-            'order_status_uuid' => $orderStatus->uuid,
+            'order_status' => $orderStatus->title,
             'payment_uuid' => $payment->uuid,
             'uuid' => fake()->unique()->uuid(),
             'products' => [

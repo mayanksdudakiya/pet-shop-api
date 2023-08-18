@@ -10,7 +10,7 @@ return new class () extends Migration {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignUuid('user_uuid')->constrained('users', 'uuid')->cascadeOnDelete();
-            $table->foreignUuid('order_status_uuid')->constrained('order_statuses', 'uuid');
+            $table->string('order_status');
             $table->foreignUuid('payment_uuid')->constrained('payments', 'uuid');
             $table->uuid()->unique();
             $table->json('products');
