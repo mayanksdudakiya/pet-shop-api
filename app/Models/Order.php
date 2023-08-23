@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\StateMachine\OrderState;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -10,7 +11,7 @@ use Mayanksdudakiya\StateMachine\StateMachine;
 class Order extends Model
 {
     use HasFactory;
-    //use StateMachine;
+    use StateMachine;
 
     protected $fillable = [
         'user_uuid',
@@ -28,6 +29,7 @@ class Order extends Model
         'products' => 'json',
         'address' => 'json',
         'shipped_at' => 'timestamp',
+        'order_status' => OrderState::class,
     ];
 
     /**

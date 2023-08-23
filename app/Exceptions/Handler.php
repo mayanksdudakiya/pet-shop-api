@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
             $e instanceof ThrottleRequestsException => ApiResponse::sendError('Too Many Requests.', Response::HTTP_TOO_MANY_REQUESTS),
             $e instanceof ModelNotFoundException => ApiResponse::sendError($e->getMessage(), Response::HTTP_NOT_FOUND),
             $e instanceof ValidationException => ApiResponse::sendValidationError('Validation error occured', $e->validator->errors()),
-            $e instanceof QueryException => ApiResponse::sendError('Database query error.', Response::HTTP_INTERNAL_SERVER_ERROR),
+            $e instanceof QueryException => ApiResponse::sendError('Database query error:'.$e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR),
             $e instanceof HttpResponseException => $e->getResponse(),
             $e instanceof FileNotFoundException => ApiResponse::sendError($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR),
             $e instanceof CannotDecodeContent => ApiResponse::sendError('Failed to authenticate user', Response::HTTP_UNAUTHORIZED),
