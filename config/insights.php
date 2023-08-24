@@ -65,7 +65,7 @@ return [
     */
 
     'exclude' => [
-        //  'path/to/directory-or-file'
+        'packages'
     ],
 
     'add' => [
