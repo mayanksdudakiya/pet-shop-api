@@ -26,7 +26,10 @@ class PaymentFactory extends Factory
         ];
     }
 
-    private function getPaymentDetails(string $paymentType)
+    /**
+     * @return array<string, mixed>
+     */
+    private function getPaymentDetails(string $paymentType): array
     {
         return match ($paymentType) {
             PaymentTypeEnum::CREDIT_CARD->value => [

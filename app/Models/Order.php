@@ -33,7 +33,7 @@ class Order extends Model
     ];
 
     /**
-     * @return HasOne<OrderStatus>
+     * @return HasOne<Payment>
      */
     public function payment(): HasOne
     {
