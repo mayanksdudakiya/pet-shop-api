@@ -1,0 +1,3 @@
+[submodule "packages/mayanksdudakiya/currency-converter"]
+	path = packages/mayanksdudakiya/currency-converter
+	url = https://github.com/mayanksdudakiya/currency-converter.git
