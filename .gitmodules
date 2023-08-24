@@ -1,3 +1,6 @@
 [submodule "packages/mayanksdudakiya/currency-converter"]
 	path = packages/mayanksdudakiya/currency-converter
 	url = https://github.com/mayanksdudakiya/currency-converter.git
+[submodule "packages/mayanksdudakiya/state-machine"]
+	path = packages/mayanksdudakiya/state-machine
+	url = https://github.com/mayanksdudakiya/state-machine.git
