@@ -1,4 +1,4 @@
-# Pet E-Commerce Shop API - Buckhill Challenge
+# Pet E-Commerce Shop API
 
 1) Clone the repository `git clone git@github.com:mayanksdudakiya/pet-shop-api.git`
 2) Run the `git submodule update --init --recursive` to clone both packages currency-converter and state-machine packages
